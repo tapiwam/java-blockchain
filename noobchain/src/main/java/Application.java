@@ -12,14 +12,14 @@ public class Application {
 
     public static void main(String[] args){
 
-        Block genesisBlock = new Block("0", "First Block");
+        Block genesisBlock = new Block(0,"0", "First Block");
         logger.info("Block 1: " + genesisBlock.toString() ) ;
 
-        Block secondBlock = new Block(genesisBlock.getHash(), "Yo im the second block");
-        logger.info("Block 1: " + secondBlock.toString() ) ;
+        Block secondBlock = new Block(1,genesisBlock.getHash(), "Yo im the second block");
+        logger.info("Block 2: " + secondBlock.toString() ) ;
 
-        Block thirdBlock = new Block(secondBlock.getHash(), "Yo im the third block");
-        logger.info("Block 1: " + thirdBlock.toString() ) ;
+        Block thirdBlock = new Block(2, secondBlock.getHash(), "im the third block");
+        logger.info("Block 3: " + thirdBlock.toString() ) ;
 
     }
 

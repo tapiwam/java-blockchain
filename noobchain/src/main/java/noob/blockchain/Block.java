@@ -6,15 +6,25 @@ import java.util.Date;
 
 public class Block {
 
-    protected Long id;
+    protected Integer id;
     protected String hash;
     protected String previousHash;
     protected String data;
     protected Long timestamp;
+    private int nonce;
 
     // Block constructor
-    /*public Block(Long id, String previousHash, String data) {
+    public Block(Integer id, String previousHash, String data) {
         this.id = id;
+        this.previousHash = previousHash;
+        this.data = data;
+        this.timestamp = new Date().getTime();
+
+        this.hash = calculateHash();
+    }
+
+    /*public Block(String previousHash, String data) {
+        this.id = null;
         this.previousHash = previousHash;
         this.data = data;
         this.timestamp = new Date().getTime();
@@ -22,20 +32,11 @@ public class Block {
         this.hash = calculateHash();
     }*/
 
-    public Block(String previousHash, String data) {
-        this.id = null;
-        this.previousHash = previousHash;
-        this.data = data;
-        this.timestamp = new Date().getTime();
-
-        this.hash = calculateHash();
-    }
-
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -85,7 +86,19 @@ public class Block {
     private String getHashString(){
         return previousHash
                 + timestamp.toString()
+                + Integer.toString(nonce)
                 + data;
+    }
+
+    // ====================================
+
+    public void mineBlock(int difficulty){
+        String target = new String(new char[difficulty]).replace('\0', '0'); //Create a string with difficulty * "0"
+        while(!hash.substring( 0, difficulty).equals(target)) {
+            nonce ++;
+            hash = calculateHash();
+        }
+        System.out.println("Block Mined!!! : " + hash);
     }
 
     // ====================================
